@@ -1,14 +1,14 @@
 # expressRouter
 
 
-### LAB: Express
+### LAB 08:
 
-Dynamic API Phase 2: Continue working on a multi-day build of a dynamic API
+We added express, saving to mongo, and creating an actual saving to the DB. 
 
-At this momment we have products and category routes, a middleware with 4 modules: logger, timestamp, 400 nd 500 erro messages.
+#### Phase 3 Requirements
 
-Our entry is in index.js, and it links to our server.js
+From a business requirements standpoint, nothing changes. In this phase, we continue the transition towards making a “real” API server. Specifically, we will be migrating from in-memory data storage to using Mongo to store our data permanently, and modularizing our routes for flexibility. Through it all, we will be providing the same interface to our users. To the outside world, our API remains unchanged
 
-Our middleware is logging and we are able to keep track of the request hits and they are timestamped.
+## UML
 
-Nothing is saving to mongo just yet.
+![UML](https://github.com/401Repo/expressRouter/blob/main/phonto.jpg?raw=true)

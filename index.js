@@ -3,10 +3,16 @@
 require('dotenv').config();
 const PORT =  process.env.PORT;
 
-const app = require('./lib/server.js');
+const server = require('./lib/server.js');
+const mongoose = require('mongoose');
 
-app.listen( PORT || 3001, () => {
-  console.log('Listening on port: 3000');
+const mongoLink = process.env.mongoLink;
+
+mongoose.connect(mongoLink, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
+server.start(PORT);
 

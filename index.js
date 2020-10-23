@@ -1,5 +1,13 @@
 'use strict';
 
+//Duck by Joan Stark
+//                 ,-.
+//         ,      ( {o\
+//         {`"=,___) (`~
+//          \  ,_.-   )
+//jgs  ~^~^~^`- ~^ ~^ '~^~^~^~
+//         This is my entry. All i do here is call the server js.
+//
 require('dotenv').config();
 const PORT =  process.env.PORT;
 

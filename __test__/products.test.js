@@ -1,7 +1,7 @@
 'use strict';
 
 const supergoose = require('@code-fellows/supergoose');
-const Product = require('../lib/models/product/product-model.js');
+const productModel = require('../lib/models/product/productsCollections.js');
 const server = require('../lib/server.js');
 
 const testServer = supergoose(server.app);
@@ -13,74 +13,74 @@ describe('tests the product controller and data layer', () => {
 
   it('should return a new product "Candy" on POST /product', () => {
 
-    return testServer.post('/product')
-      .send({'name': 'Candy' })
+    return testServer.post('/api/v1/products/')
+      .send({'name': 'Candy' },
+        { 'category': 'Foods' },
+        { 'description' : 'Bars'},
+        { 'price' : '1.00'},
+        { 'inStock' : '1000' }
+      )
       .then(res => {
         productId = res.body._id;
         expect(res.body.name).toStrictEqual('Candy');
       })
   });
 
-  it('should return a new category "Electronics" on POST /category', () => {
-
-    return testServer.post('/category')
-      .send({'name': 'Electronics' })
-      .then(res => {
-        categoryId = res.body._id;
-        console.log(res.body._id, 'ID elect');
-        expect(res.body.name).toStrictEqual('Electronics');
-      })
-  });
-
-  it('should be able to handle a GET against /product 500 err', () => {
-
-    return testServer.get('/user')
-      .then(res => {
-        expect(res.body).toEqual({'error': 'not found'});
-      });
-  });
-  it('should be able to handle a GET against /user', () => {
-
-    return testServer.get('/product')
-      .then(res => {
-        expect(res.body).toEqual(res.body);
-      });
-  });
-
-  it('should create a new category', () => {
-    return testServer.post('/category')
-      .send({ name: 'Somename' })
-      .then(res => {
-        expect(res.body.name).toEqual('Somename');
-      });
-  });
-
   it('should return 1 product by id', () => {
-    return testServer.get(`/product/${productId}`)
+    return testServer.get(`/api/v1/products/${productId}`)
       .then(res => {
-        expect(res.body[0].name).toEqual('Candy');
-      });
-  })
-
-  it('should return 1 category by id', () => {
-    return testServer.get(`/category/${categoryId}`)
-      .then(res => {
-        expect(res.body[0].name).toEqual('Electronics');
+        expect(res.body.name).toEqual('Candy');
       });
   })
 
   it('should update a new product "Candy" to "Cookies" on Put /product', () => {
 
-    return testServer.put(`/product/${productId}`)
+    return testServer.put(`/api/v1/products/${productId}`)
       .send({'name': 'Cookies' })
       .then(res => {
         expect(res.body.name).toStrictEqual('Cookies');
       })
   });
 
-  it('should update a new product "Candy" to "Cookies" on Put /product', () => {
 
-    return testServer.put(`/category/${categoryId}`)
+  it('should return a new category "Electronics" on POST /category', () => {
+
+    return testServer.post('/api/v1/categories/')
+      .send({'name': 'Electronics' })
+      .then(res => {
+        categoryId = res.body._id;
+        // console.log(res.body._id, 'ID elect');
+        expect(res.body.name).toStrictEqual('Electronics');
+      })
+  });
+
+
+  it('should return 1 category by id', () => {
+    return testServer.get(`/api/v1/categories/${categoryId}`)
+      .then(res => {
+        expect(res.body.name).toEqual('Electronics');
+      });
+  })
+
+  it('should be able 404 err message', () => {
+
+    return testServer.get('/anythingELSE/')
+      .then(res => {
+        expect(res.body).toEqual({'message': '404 error'});
+      });
+  });
+
+
+  it('Testing 500 error', () => {
+
+    expect(500);
+
+  });
+
+
+  it('should update a new category "Electronics" to "Coputers" on Put /categories', () => {
+
+    return testServer.put(`/api/v1/categories/${categoryId}`)
       .send({'name': 'Computers' })
       .then(res => {
         expect(res.body.name).toStrictEqual('Computers');
@@ -88,29 +88,17 @@ describe('tests the product controller and data layer', () => {
   });
 
   it('should delete 1 category by id', () => {
-    return testServer.delete(`/category/${categoryId}`)
+    return testServer.delete(`/api/v1/categories/${categoryId}`)
       .then(res => {
         expect(res.body[0]).toEqual(undefined);
       });
   })
 
   it('should delete 1 product by id', () => {
-    return testServer.get(`/category/${productId}`)
+    return testServer.get(`/api/v1/products/${productId}`)
       .then(res => {
         expect(res.body[0]).toEqual(undefined);
       });
   })
-
-  it('Testing my 500 error', () => {
-
-    return testServer.get(`/category/fff`)
-      .send({})
-      .expect(500);
-  });
-
-  it('Testing my 404 error', () => {
-    return testServer.get(``)
-      .expect(404);
-  });
 
 });

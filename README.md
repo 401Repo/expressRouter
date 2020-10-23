@@ -7,12 +7,15 @@ Further dry your project by using one router and midleware to route all your req
 
 ### UML
 
+![UML](https://github.com/401Repo/expressRouter/blob/main/UML.jpg?raw=true)
+
+My UML shows a high logic view of how a request must hit my middleware and successfully save or come back with an error. This is outside of the testing going on in the __test__ files.
 
 ### TDD
 
-###### Testing using Supergoose:
-
 #####  tests the product controller and data layer
+  
+  Testing using Supergoose atm:
   
 -    ✓ should return a new product "Candy" on POST /product (41 ms)
 -    ✓ should return 1 product by id (13 ms)
